@@ -20,17 +20,17 @@ public class CompanyController {
 	@Autowired
 	private CompanyService companyService;
 	
-	@PostMapping("company/add")
+	@PostMapping("companys")
 	public Company saveCompany(@RequestBody  Company company) {
 		return companyService.addCompany(company);
 	}
 	
-	@GetMapping("company")
+	@GetMapping("companys")
 	public List<Company> get(){
 		return companyService.getall();
 	}
 	
-	@DeleteMapping("company/{name}")
+	@DeleteMapping("companys/{name}")
 	public String deleteCompany(@PathVariable int name) {
 		return companyService.deleteCompany(name);
 	}

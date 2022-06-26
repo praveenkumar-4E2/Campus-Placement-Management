@@ -1,5 +1,6 @@
 package vignan.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,8 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.ManyToAny;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -22,18 +25,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-@Getter
-@Setter
 
 @Entity
-public class Staff {
+public class Staff implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-
 	private int staffId;
 	private String name;
 	private String role;
@@ -41,11 +37,10 @@ public class Staff {
 	private String mobileNo;
 	private String address;
 	
-	@ManyToOne
-	@JoinColumn(name = "department_id",referencedColumnName = "departmentName")
-	private Department department;
 	
-	@OneToMany(mappedBy = "staff")
+	
+	@OneToMany(targetEntity = Student.class,fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+	@JoinColumn(name = "staff",referencedColumnName = "staffid")
 	private List<Student> student;
 
 	public Staff() {
@@ -53,8 +48,7 @@ public class Staff {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Staff(int staffId, String name, String role, String mail, String mobileNo, String address,
-			Department department, List<Student> student) {
+	public Staff(int staffId, String name, String role, String mail, String mobileNo, String address, List<Student> student) {
 		super();
 		this.staffId = staffId;
 		this.name = name;
@@ -62,7 +56,6 @@ public class Staff {
 		this.mail = mail;
 		this.mobileNo = mobileNo;
 		this.address = address;
-		this.department = department;
 		this.student = student;
 	}
 
@@ -114,14 +107,7 @@ public class Staff {
 		this.address = address;
 	}
 
-	public Department getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
-
+	
 	public List<Student> getStudent() {
 		return student;
 	}
@@ -133,8 +119,10 @@ public class Staff {
 	@Override
 	public String toString() {
 		return "Staff [staffId=" + staffId + ", name=" + name + ", role=" + role + ", mail=" + mail + ", mobileNo="
-				+ mobileNo + ", address=" + address + ", department=" + department + ", student=" + student + "]";
+				+ mobileNo + ", address=" + address + ", department=" + ", student=" + student + "]";
 	}
+
+	
 	
 	
 	

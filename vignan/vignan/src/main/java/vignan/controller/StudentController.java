@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import vignan.model.Department;
 import vignan.model.Student;
 import vignan.service.StudentService;
 
@@ -27,31 +28,31 @@ public class StudentController {
 	@Autowired
 	private StudentService studentService;
 	
-	@PostMapping("student/add")
-	public Student addStudent(@RequestBody Student student)
+	@PostMapping("student/{branch}")
+	public Department addStudent(@PathVariable String branch, @RequestBody Student student)
 	{
-		return studentService.saveStudent(student);
+		return studentService.saveStudent(branch, student);
 	}
 	
 	
-	@GetMapping("student/name:{firstName}")
-	public Student findByUserName(@PathVariable String firstName) {
-        return studentService.getByName(firstName);
+	@GetMapping("student/name/{Name}")
+	public Student findByUserName(@PathVariable String Name) {
+        return studentService.getByName(Name);
     }
 	
-	@GetMapping("student/rollNo:{rollNo}")
+	@GetMapping("student/{rollNo}")
 	public Student findbyRoll(@PathVariable String rollNo)
 	{
 		return studentService.getByUserRollNo(rollNo);
 	}
 	
-	@GetMapping("student/all")
+	@GetMapping("student")
 	public List<Student> findAll()
 	{
 		return studentService.getAllStudents();
 	}
 	
-	@DeleteMapping("student/rollno/{rollNo}")
+	@DeleteMapping("student/{rollNo}")
 	public String deleteStudent(@PathVariable String rollNo)
 	{
 		return studentService.deleteByRollNo(rollNo);

@@ -18,7 +18,7 @@ public class PlacementController {
 	@Autowired
 	PlacementService placementService;
 	
-	@PostMapping("placement/add")
+	@PostMapping("placement")
 	public Placement addPlacement(@RequestBody Placement placement) {
 		return placementService.addPlacement(placement);
 	}

@@ -38,11 +38,14 @@ import lombok.ToString;
 
 @Entity
 public class Student implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column(unique = true)
-	@NaturalId
+
 	private String rollNo;
 	private String name;
 	private String section;
@@ -53,19 +56,11 @@ public class Student implements Serializable{
 	private String passingYear;
 	private boolean placed;
 	
-	@ManyToOne
-	@JoinColumn(name = "department_id",referencedColumnName = "departmentName")
-	@JsonIgnore
-	private Department department;
 	
-	@ManyToOne
-	@JoinColumn(name="councellor_id")
-	@JsonIgnore
-	private Staff staff;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 		  @JoinTable(name = "student_placement",
-		        joinColumns = { @JoinColumn(name = "student_id",referencedColumnName = "rollNo") },
+		        joinColumns = { @JoinColumn(name = "student_id") },
 		        inverseJoinColumns = { @JoinColumn(name = "placement_id") })
 	@JsonIgnore
 		  private Set<Placement> placement = new HashSet<>();
@@ -76,7 +71,7 @@ public class Student implements Serializable{
 	}
 
 	public Student(int id, String rollNo, String name, String section, String marks, String mail, String mobileNo,
-			String address, String passingYear, boolean placed, Department department, Staff staff,
+			String address, String passingYear, boolean placed, 
 			Set<Placement> placement) {
 		super();
 		this.id = id;
@@ -89,8 +84,7 @@ public class Student implements Serializable{
 		this.address = address;
 		this.passingYear = passingYear;
 		this.placed = placed;
-		this.department = department;
-		this.staff = staff;
+		
 		this.placement = placement;
 	}
 
@@ -174,21 +168,7 @@ public class Student implements Serializable{
 		this.placed = placed;
 	}
 
-	public Department getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
-
-	public Staff getStaff() {
-		return staff;
-	}
-
-	public void setStaff(Staff staff) {
-		this.staff = staff;
-	}
+	
 
 	public Set<Placement> getPlacement() {
 		return placement;
@@ -202,8 +182,7 @@ public class Student implements Serializable{
 	public String toString() {
 		return "Student [id=" + id + ", rollNo=" + rollNo + ", name=" + name + ", section=" + section + ", marks="
 				+ marks + ", mail=" + mail + ", mobileNo=" + mobileNo + ", address=" + address + ", passingYear="
-				+ passingYear + ", placed=" + placed + ", department=" + department + ", staff=" + staff
-				+ ", placement=" + placement + "]";
+				+ passingYear + ", placed=" + placed + ", department=" + ", placement=" + placement + "]";
 	}
 
 	

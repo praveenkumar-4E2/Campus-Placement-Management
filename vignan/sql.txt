@@ -1,1 +1,0 @@
-insert into student (id,addnress,first_name,last_name,mail,marks,middle_name,mobile_no,passing_year,placed,roll_no) values(1,"narasaropet","praveen","thanneeru","pthanneru@gmail.com","7.5","kumar","7981346148","2022",1,"18FE1A04E2");

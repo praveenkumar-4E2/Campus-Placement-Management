@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import vignan.model.Department;
 import vignan.model.Student;
 import vignan.repository.StudentRepository;
 
@@ -14,10 +15,15 @@ public class StudentService {
 	@Autowired
 	private StudentRepository  studentRepository;
 	
+	@Autowired
+	private DepartmentService departmentService;
 	
-	public Student saveStudent(Student student)
+	
+	public Department saveStudent(String branch, Student student)
 	{
-		return studentRepository.save(student);
+		Student savedStudent= studentRepository.save(student);
+		
+		return departmentService.updateDepartment(branch, savedStudent);
 	}
 	
 	public Student getByUserRollNo(String rollNo) {

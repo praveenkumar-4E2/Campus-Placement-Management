@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 
 
 @Entity
@@ -27,7 +29,8 @@ public class Company {
 	private String hrMail;
 	private String hrMobileNo;
 	
-	@OneToMany(mappedBy = "company",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = Placement.class,fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+	@JoinColumn(name = "company",referencedColumnName = "companyId")
 	private List<Placement> placement;
 
 	public Company() {

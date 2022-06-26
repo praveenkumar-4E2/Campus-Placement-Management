@@ -11,5 +11,5 @@ import vignan.model.Department;
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department, Integer>{
 
-	
+	public Department findBydepartmentName(String branch);
 }

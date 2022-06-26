@@ -18,13 +18,11 @@ public class Placement {
 	
 	@Id
 	private int placementId;
-	private int salary;
+	private String salary;
 	private String role;
 	private Date placedDate;
 	
-	@ManyToOne
-	@JoinColumn(name = "company_id")
-	private Company company;
+	
 	
 	@ManyToMany(fetch = FetchType.LAZY,
 		      cascade = {
@@ -40,13 +38,13 @@ public class Placement {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Placement(int placementId, int salary, String role, Date placedDate, Company company, Set<Student> student) {
+	public Placement(int placementId, String salary, String role, Date placedDate, Set<Student> student) {
 		super();
 		this.placementId = placementId;
 		this.salary = salary;
 		this.role = role;
 		this.placedDate = placedDate;
-		this.company = company;
+		
 		this.student = student;
 	}
 
@@ -58,11 +56,11 @@ public class Placement {
 		this.placementId = placementId;
 	}
 
-	public int getSalary() {
+	public String getSalary() {
 		return salary;
 	}
 
-	public void setSalary(int salary) {
+	public void setSalary(String salary) {
 		this.salary = salary;
 	}
 
@@ -82,13 +80,7 @@ public class Placement {
 		this.placedDate = placedDate;
 	}
 
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
+	
 
 	public Set<Student> getStudent() {
 		return student;
@@ -101,7 +93,7 @@ public class Placement {
 	@Override
 	public String toString() {
 		return "Placement [placementId=" + placementId + ", salary=" + salary + ", role=" + role + ", placedDate="
-				+ placedDate + ", company=" + company + ", student=" + student + "]";
+				+ placedDate + ", company="  +", student=" + student + "]";
 	}
 	
 	

@@ -11,10 +11,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NaturalId;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,11 +35,13 @@ import lombok.ToString;
 
 @Entity
 public class Department implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue
 	private int departmentId;
-	@Column(unique = true)
-	@NaturalId
+	//@Column(unique = true)
 	private  String departmentName;
 	private String departmentHead;
 	private String departmentCoordinator;
@@ -45,11 +50,14 @@ public class Department implements Serializable{
 //	@JoinColumn(name = "st_dpfk",referencedColumnName = "id")
 //	List<Student> student =new ArrayList<Student>();
 	
-	@OneToMany(mappedBy = "department")
+	@OneToMany(targetEntity = Student.class,fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+	@JoinColumn(name = "department",referencedColumnName = "departmentId")
 	
 	private List<Student> student;
 	
-	@OneToMany(mappedBy = "department")
+	@OneToMany(targetEntity = Staff.class,fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+	@JoinColumn(name = "department",referencedColumnName = "departmentId")
+	
 	private List<Staff> staff;
 
 	public Department() {
