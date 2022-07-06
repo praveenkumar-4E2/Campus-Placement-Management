@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import vignan.model.Department;
 import vignan.model.Staff;
 import vignan.repository.StaffRepository;
 
@@ -13,10 +14,14 @@ public class StaffService {
 
 	@Autowired
 	private StaffRepository staffRepository;
+	@Autowired
+	private DepartmentService departmentService;
 	
-	public Staff saveStaff(Staff staff)
+	
+	public Department saveStaff(String branch ,Staff staff)
 	{
-		return staffRepository.save(staff);
+		Staff newStaff=staffRepository.save(staff);
+		return  departmentService.updateDepartmentStaff(branch, newStaff);
 	}
 	
 	public List<Staff> getAllStaff()

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import vignan.model.Department;
 import vignan.model.Staff;
 import vignan.service.StaffService;
 
@@ -18,9 +19,9 @@ public class StaffController {
 	@Autowired
 	private StaffService staffService;
 	
-	@PostMapping("staff")
-	public Staff addStaff (@RequestBody Staff staff) {
-		return staffService.saveStaff(staff);
+	@PostMapping("staff/{branch}")
+	public Department addStaff (@PathVariable String branch ,@RequestBody Staff staff) {
+		return staffService.saveStaff(branch, staff);
 	}
 	
 	@GetMapping("staff")

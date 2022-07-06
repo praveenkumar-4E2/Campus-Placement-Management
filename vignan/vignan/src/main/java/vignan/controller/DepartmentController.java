@@ -53,9 +53,6 @@ public class DepartmentController {
 		
 	}
 	
-	@PutMapping("department/{branch}")
-	public Department updateDepartment(@PathVariable String branch,@RequestBody Student student) {
-		return departmentService.updateDepartment(branch, student);
-	}
+	
 	
 }

@@ -58,12 +58,19 @@ public class Student implements Serializable{
 	
 	
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-		  @JoinTable(name = "student_placement",
-		        joinColumns = { @JoinColumn(name = "student_id") },
-		        inverseJoinColumns = { @JoinColumn(name = "placement_id") })
-	@JsonIgnore
+//	@ManyToMany(fetch = FetchType.LAZY )
+//	  @JoinTable(name = "student_placement",
+//	        joinColumns = { @JoinColumn(name = "student_id", referencedColumnName = "id",insertable = false,updatable = false) },
+//	        inverseJoinColumns = { @JoinColumn(name = "placement_id") })
+//	
+	
+	@ManyToMany(fetch = FetchType.LAZY,
+    
+    mappedBy = "student")
+@JsonIgnore
 		  private Set<Placement> placement = new HashSet<>();
+	
+	
 
 	public Student() {
 		super();

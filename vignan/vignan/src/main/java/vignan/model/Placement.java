@@ -1,5 +1,6 @@
 package vignan.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,16 +8,20 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Placement {
+public class Placement implements Serializable {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int placementId;
 	private String salary;
 	private String role;
@@ -24,13 +29,17 @@ public class Placement {
 	
 	
 	
-	@ManyToMany(fetch = FetchType.LAZY,
-		      cascade = {
-		          CascadeType.PERSIST,
-		          CascadeType.MERGE
-		      },
-		      mappedBy = "placement")
-		  @JsonIgnore
+//	@ManyToMany(fetch = FetchType.LAZY,
+//		    
+//		      mappedBy = "placement")
+//		  @JsonIgnore
+	
+	@ManyToMany(fetch = FetchType.LAZY )
+	  @JoinTable(name = "student_placement",
+	        joinColumns = { @JoinColumn(name = "placement_id", referencedColumnName = "placementId",insertable = false,updatable = false) },
+	        inverseJoinColumns = { @JoinColumn(name = "student_id") })
+	
+		  
 		  private Set<Student> student = new HashSet<>();
 
 	public Placement() {

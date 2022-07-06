@@ -9,4 +9,6 @@ import vignan.model.Placement;
 @Repository
 public interface PlacementRepository extends JpaRepository<Placement, Integer> {
 
+	Placement getByRole(String role);
+
 }

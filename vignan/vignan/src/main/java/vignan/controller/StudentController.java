@@ -35,6 +35,15 @@ public class StudentController {
 	}
 	
 	
+	@PutMapping("student/{roll}/{rollNo}")
+	public Student addStudentPlacement(@PathVariable String roll, String rollNo)
+	{
+		return studentService.updatePlacment(roll, rollNo);
+	}
+	
+	
+	
+	
 	@GetMapping("student/name/{Name}")
 	public Student findByUserName(@PathVariable String Name) {
         return studentService.getByName(Name);

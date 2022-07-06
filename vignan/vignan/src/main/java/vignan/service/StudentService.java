@@ -1,19 +1,24 @@
 package vignan.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import vignan.model.Department;
+import vignan.model.Placement;
 import vignan.model.Student;
+import vignan.repository.PlacementRepository;
 import vignan.repository.StudentRepository;
 
 @Service
 public class StudentService {
 	@Autowired
 	private StudentRepository  studentRepository;
+	@Autowired
+	private PlacementRepository placementRepository;
 	
 	@Autowired
 	private DepartmentService departmentService;
@@ -23,7 +28,7 @@ public class StudentService {
 	{
 		Student savedStudent= studentRepository.save(student);
 		
-		return departmentService.updateDepartment(branch, savedStudent);
+		return departmentService.updateDepartmentStudent(branch, savedStudent);
 	}
 	
 	public Student getByUserRollNo(String rollNo) {
@@ -62,7 +67,19 @@ public class StudentService {
 		existingStudent.setMobileNo(student.getMobileNo());
 		existingStudent.setPassingYear(student.getPassingYear());
 		existingStudent.setPlaced(student.isPlaced());
-		return studentRepository.save(null);
+		return studentRepository.save(existingStudent);
+	}
+	
+	
+	//to add placements
+	public Student updatePlacment(String offer,String rollNo) {
+		Student oldStudent=studentRepository.findByName(rollNo);
+		Placement placement=placementRepository.getByRole(offer);
+		Set<Placement> placements=oldStudent.getPlacement();
+		placements.add(placement);
+		oldStudent.setPlacement(placements);
+		return studentRepository.save(oldStudent);
+		
 	}
 	
 }

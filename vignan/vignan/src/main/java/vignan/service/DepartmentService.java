@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vignan.model.Department;
+import vignan.model.Staff;
 import vignan.model.Student;
 import vignan.repository.DepartmentRepository;
 
@@ -34,11 +35,19 @@ public class DepartmentService {
 		return "deleted";
 	}
 	
-	public Department updateDepartment(String branch , Student student) {
+	public Department updateDepartmentStudent(String branch , Student student) {
 		Department newDepartment=getByDepartmentName(branch);
 		List<Student> newStudents=newDepartment.getStudent();
 		newStudents.add(student);
 		newDepartment.setStudent(newStudents);
+		return departmentRepository.save(newDepartment);
+	}
+	
+	public Department updateDepartmentStaff(String branch , Staff staff) {
+		Department newDepartment=getByDepartmentName(branch);
+		List<Staff> newStaff=newDepartment.getStaff();
+		newStaff.add(staff);
+		newDepartment.setStaff(newStaff);
 		return departmentRepository.save(newDepartment);
 	}
 	
