@@ -1,8 +1,11 @@
 package vignan.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +27,7 @@ import vignan.repository.DepartmentRepository;
 import vignan.service.DepartmentService;
 
 
-
+@CrossOrigin("http://localhost:4200")
 
 @RestController
 public class DepartmentController {
@@ -52,6 +55,27 @@ public class DepartmentController {
 		return departmentService.deleteDepartment(branch);
 		
 	}
+	
+	@GetMapping("department/placed")
+	public Map<String, Integer> departmentPlacementGet()
+	{
+		return departmentService.departmentPlacementCount();
+	}
+	@GetMapping("department/total/placments")
+	public int totalPlacementGet()
+	{
+		return departmentService.totalPlacements();
+	}
+	
+	//section wise placements
+	@GetMapping("placements/{branch}")
+	public HashMap<String, Integer> sectionPlacements(@PathVariable String branch)
+	{
+	
+		return departmentService.sectionPlacements(branch);
+		
+	}
+	
 	
 	
 	
